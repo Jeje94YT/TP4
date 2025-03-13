@@ -13,5 +13,10 @@
           python-version: "3.9"
       - name: Install packages
         run: pip install -r requirements.txt
-      - name: Run tests
-        run: python manage.py test
+      - name: Set commit hashes for bisect
+        run: |
+          echo "GOOD_HASH=e4cfc6f77ebbe2e23550ddab682316ab4ce1c03c" >> $GITHUB_ENV
+          echo "BAD_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Run git bisect automation
+        run: |
+          python budget/myscript.py
